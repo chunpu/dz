@@ -1,0 +1,12 @@
+extends /layout
+block content
+  ol.breadcrumb
+    li: a(href='/section') 全部版块
+    li.active= locals.section.name
+  .page-header: h3 发表帖子
+  form(method='POST')
+    .form-group
+      input.form-control(type='text' placeholder='标题' name='title')
+    .form-group
+      textarea.form-control(placeholder='内容' name='content' rows='10')
+    button(class='btn btn-primary') 发表

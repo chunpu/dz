@@ -1,0 +1,25 @@
+extends /layout
+block content
+  style.
+    blockquote.blue {
+      border-color: hsl(204, 52%, 88%);
+    }
+  ol.breadcrumb
+    li: a(href='/section') 全部版块
+    li.active 分享
+  .page-header: h3 分享文章
+  form(method='POST')
+    .form-group
+      label 分享标题
+      input.form-control(type='text' name='title' value='#{page.title}')
+    .form-group
+      label 原文链接
+      input.form-control(type='text' name='source' value='#{page.url.src}')
+    .form-group
+      label 内容
+      textarea.form-control(placeholder='内容' name='content' rows='10')!= page.content
+    .form-group
+      label 预览
+      blockquote.blue!= page.content
+      input.hide(type='text' name='share_preview' value='#{page.preview}')
+    button(class='btn btn-primary') 确定分享

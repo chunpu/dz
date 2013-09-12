@@ -1,0 +1,76 @@
+doctype 5
+html
+  head
+    block title
+      title= locals.config.name
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, user-scalable=no')
+    link(href='http://cdn.staticfile.org/twitter-bootstrap/3.0.0-rc2/css/bootstrap.css', rel='stylesheet')
+    link(href='http://cdn.staticfile.org/font-awesome/3.2.1/css/font-awesome.css', rel='stylesheet')
+    script(src='http://cdn.staticfile.org/jquery/2.0.3/jquery.js')
+    script(src='http://cdn.staticfile.org/twitter-bootstrap/3.0.0-rc2/js/bootstrap.js')
+    style.
+      body {
+        background-color: rgb(235, 236, 237);
+      }
+      .cursor-move {
+        cursor: move;
+      }
+      .cursor-move:active {
+        background: #2a6496;
+      }
+      .block {
+        display: block;
+      }
+      .soft {
+        color: #888;
+      }
+      .post-block {
+        margin-bottom: 1em;
+        box-shadow: #d2d2d4 0 0.1em 0;
+        vertical-align: middle;
+        background: #fff;
+        min-height: 50px;
+        padding: 20px;
+      }
+      .alert {
+        color: #2a6496;
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+      .alert {
+        width: 300px;
+        height: 60px;
+        background: #ccc;
+        top: 40%;
+        left: 50%;
+        margin-top: -30px;
+        margin-left: -150px;
+        box-shadow: 0 0 0 2px #16a085;
+        z-index: 5;
+        position: fixed;
+        border-radius: 7px;
+        text-align: center;
+      }
+
+      @media (max-width: 500px) {
+        .post-block {
+          padding: 8px;
+        }
+        .col-md-3, .col-md-9 {
+          padding: 5px;
+        }
+        .no-mobile {
+          display: none;
+        }
+      }
+  body
+    include nav
+    .row
+      div(class='col-xs-0 col-md-3')
+        // sidebar
+        include sidebar
+      // content
+      div(class='col-xs-12 col-md-9')
+        block content
+          p 无内容

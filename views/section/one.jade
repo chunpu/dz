@@ -1,0 +1,9 @@
+extends /layout
+block content
+  ol.breadcrumb
+    li: a(href='/section') 全部版块
+    li.active= section.name
+  p.well= section.description
+
+  // post list
+  include /post/list

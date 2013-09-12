@@ -1,0 +1,19 @@
+block title
+  title 首页
+extends /layout
+block content
+  p.lead 最新帖子
+  include /post/list
+    //
+      table(class='table table-hover')
+        each post in posts
+          tr
+            td
+              a(href='/user/#{post.author}')= post.author_name
+            td #{post.reply_count}/#{post.visit_count}
+            td
+              a(href='/post/#{post._id}')= post.title
+            - var t = post.create_at
+            - var time = (t.getMonth()+1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + t.getMinutes()
+            td(class='text-right')= time
+    

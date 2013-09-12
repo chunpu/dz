@@ -1,0 +1,34 @@
+extends /layout
+block content
+  .row
+    div(class='col-md-6 col-xs-12')
+      div(class='panel panel-default')
+        .panel-heading
+          i.icon-edit(class='pull-right' style='font-size: 18px;')
+          h3.panel-title 个人资料
+        .panel-body
+          table(class='table table-hover')
+            tr
+              th: img(src='#{person.avatar}')
+              // 区分自己和其他用户
+              td
+                span.block: 关注
+                span.block: 发私信
+            tr
+              th 用户名
+              td= person.name
+            tr
+              th 性别
+              td= person.gender
+            tr
+              th 加入时间
+              td 于
+                code= person.create_at_showtime
+                | 加入#{locals.config.name}
+
+  .row
+    div(class='col-md-12 col-xs-12')
+      ol.breadcrumb
+        li 最近发布话题
+      include /post/list
+      

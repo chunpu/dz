@@ -1,0 +1,26 @@
+nav(class='navbar navbar-default' role='navigation')
+  .navbar-header
+    button(type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-ex1-collapse')
+      span.sr-only Toggle navigation
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+    a.navbar-brand(href='/')= locals.config.name
+  div(class='collapse navbar-collapse navbar-ex1-collapse')
+    ul(class='nav navbar-nav')
+      li: a(href='/') 首页
+      li: a(href='/section') 板块
+    if locals.user
+      ul(class='nav navbar-nav navbar-right')
+        li: a(href='/user/#{locals.user._id}') #{locals.user.name}
+        li: a(href='/signout') 退出
+    else
+      form(class='navbar-form navbar-right' method='POST' action='/signin')
+        .form-group
+          input.form-control(type='text' name='name' placeholder='用户名')
+        .form-group
+          input.form-control(tyoe='password' name='passwd' placeholder='密码')
+          input.hide(name='referer' value='#{req_path}')
+        button(type='submit' class='btn btn-default') 登陆
+        // new line
+        a(class='btn btn-default' href='/signup') 注册

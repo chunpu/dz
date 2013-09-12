@@ -1,0 +1,40 @@
+aside
+
+  // panel 1
+  div(class='panel panel-default')
+    .panel-heading 快捷操作
+    .panel-body
+      - var section = locals.section || locals.no_section
+      a(class='btn btn-default btn-block' href='/new?section=#{section._id}') 发表新帖
+      a(class='btn btn-default btn-block cursor-move' href='javascript:(function(){window.open("http:\/\/#{config.hostname}/share?url="+location.href)})()') 分享到这里
+
+  // panel 2
+  if locals.user
+    div(class='panel panel-default no-mobile')
+      .panel-heading 个人信息
+      .panel-body
+        ul(class='nav nav-pills nav-stacked')
+          li
+            a(href='/user/#{user._id}#posts')
+              span(class='badge pull-right')= locals.user.post_count
+              | 我的帖子
+          li
+            a
+              | 我的评论
+          li
+            a
+              | 评论我的
+          li
+            a
+              span(class='badge pull-right')= locals.user.post_count
+              | 我的收藏
+
+  // panel 3
+  if locals.hot_posts
+    div(class='panel panel-default no-mobile')
+      .panel-heading 热门推荐
+      .panel-body
+        ul(class='list-unstyled')
+          each post in locals.hot_posts
+            li: a(href='/post/#{post._id}') #{post.title}
+

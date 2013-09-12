@@ -1,0 +1,9 @@
+<ul>
+<% sections.forEach(function(section) { %>
+  <li>
+    <a href='/section/<%= section._id%>'><h1><%= section.name%></h1></a>
+    <p><%= section.discription%></p>
+    <time><%= section.create_at%></time>
+  </li> 
+<% }) %>
+</ul>

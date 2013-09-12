@@ -1,0 +1,16 @@
+extends /layout
+block content
+  .row: .col-md-6: .panel(class='panel-default')
+    .panel-heading 注册新用户
+    .panel-body
+      form.form-horizontal(role='form' method='POST')
+        .form-group
+          input.form-control(type='text' placeholder='用户名' name='name')
+        .form-group
+          input.form-control(type='text' placeholder='密码' name='passwd')
+        .form-group
+          input.form-control(type='email' placeholder='邮箱' name='email')
+          input.hide(name='referer' value='#{referer}')
+        button(class='btn btn-primary') 注册
+
+

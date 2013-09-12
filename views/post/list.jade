@@ -1,0 +1,60 @@
+style.
+  h4 {
+    color: red;
+  }
+  ul.post-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  ul.post-list li {
+    margin-bottom: 1em;
+    box-shadow: #d2d2d4 0 0.1em 0;
+    vertical-align: middle;
+    background: #fff;
+    min-height: 50px;
+    padding: 5px;
+  }
+  ul.post-list a {
+    text-decoration: none;
+  }
+  ul.post-list span.block {
+    display: block;
+  }
+  ul.post-list span.title {
+    font-size: 1.2em;
+  }
+  ul.post-list p.content {
+    color: #777;
+  }
+  ul.post-list i {
+    color: #ccc;
+    padding-right: 5px;
+  }
+  ul.post-list div.state > span {
+    color: #999;
+    padding-right: 15px;
+  }
+ul.post-list(id='posts')
+  each post in posts
+    li
+      .row
+        div(class='col-md-1 col-xs-2')
+          img(src='#{post.user.avatar}')
+        div(class='col-md-11 col-xs-10')
+          span.title
+            a(href='/post/#{post._id}')= post.title
+          - var content = post.share_preview || post.content || "好像木有内容！"
+          - if (content.length > 50) { content = content.substr(0, 50) + '...' }
+          p.content= content
+        div.state(class='col-md-11 col-md-offset-1 col-xs-12')
+          span
+            i(class='icon-user')
+            a(href='/user/#{post.user._id}' title='主题作者')= post.user.name
+          span
+            i(class='icon-comment')
+            span 浏览(#{post.visit_count})
+            span  | 回复(#{post.reply_count})
+          span
+            i(class='icon-time')
+            | <span title='last-reply'>#{post.time}</span>

@@ -1,0 +1,27 @@
+extends /layout
+block content
+  ol.breadcrumb
+    li: a(href='/section') 全部版块
+    if locals.section
+      li: a(href='/section/#{section._id}')= section.name
+    else
+      li: a(href='/section/未分组') 未分组
+    li.active= post.title
+
+  .post-block
+    h3= post.title
+    hr
+    if post.type === 'share'
+      p!= post.content
+      hr
+      blockquote
+        a(href='#{post.share_url}') 点击查看原文
+    else
+      p= post.content
+    hr
+    - console.log(post)
+    p.soft 标签
+    p.soft
+      a(href='/user/#{post.author}' title='作者')= post.user.name
+      |  发布于
+      code= getShowtime(post.create_at)
