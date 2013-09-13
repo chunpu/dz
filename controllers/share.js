@@ -44,7 +44,6 @@ exports.new_post = function(req, res, next) {
 
 function getContent(opt, cb) {
   var cheerio = require('cheerio')
-  console.log(opt)
   request(opt, function(err, html) {
     var $ = cheerio.load(html)
     var page = {}
