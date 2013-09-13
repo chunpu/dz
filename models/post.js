@@ -2,6 +2,13 @@ var mongoose = require('mongoose')
 var Id = mongoose.Schema.ObjectId
 var util = require('../libs/util')
 
+var ReplySchema = new mongoose.Schema({
+  author_id: Id,
+  author_name: String,
+  content: String,
+  create_at: {type: Date, default: Date.now}
+})
+
 var PostSchema = new mongoose.Schema({
   title: String, // for search
   content: String,
@@ -9,12 +16,16 @@ var PostSchema = new mongoose.Schema({
   score: {type: String, default: 0}, // can do sth like top
 
   visit_count: {type: Number, default: 0},
-  reply_count: {type: Number, default: 0},
   collect_count: {type: Number, default: 0},
 
   create_at: {type: Date, default: Date.now},
   update_at: {type: Date, default: Date.now},
+
+
+  // reply
+  reply_count: {type: Number, default: 0},
   last_reply_at: {type: Date, default: Date.now}, // sort by last reply
+  replys: [ReplySchema],
 
   type: String, // maybe share and is noescape
 
@@ -27,6 +38,8 @@ var PostSchema = new mongoose.Schema({
   
   last_reply: Id // get id so we can show who reply this
 })
+
+
 
 var Post = mongoose.model('posts', PostSchema)
 

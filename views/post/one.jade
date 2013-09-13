@@ -25,3 +25,6 @@ block content
       a(href='/user/#{post.author}' title='作者')= post.user.name
       |  发布于
       code= getShowtime(post.create_at)
+    
+    if post.replys
+      include /post/reply

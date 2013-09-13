@@ -38,7 +38,6 @@ app.use(function(req, res, next) {
   next()
 })
 route(app)
-console.log(app.routes)
 /*
 model.Post.add({
   title: 'post4',

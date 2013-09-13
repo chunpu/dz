@@ -14,6 +14,7 @@ module.exports = function(app) {
 
 
   app.get('/post/:id', post.one)
+  app.post('/post/:id/reply', post.reply)
 
   // sign
   app.get('/signup', sign.signup)

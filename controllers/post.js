@@ -12,6 +12,24 @@ exports.index = function(req, res) {
   })
 }
 
+exports.reply = function(req, res, next) {
+  var content = req.body.reply
+  var post_id = req.params.id
+  model.Post.get(post_id, function(err, post) {
+    if (post) {
+      post.replys.unshift({
+        author_id: res.locals.user._id,
+        author_name: res.locals.user.name,
+        content: content
+      })
+      post.save(function(err, post) {
+        console.log(err, post)
+        res.redirect('/post/'+post_id)
+      })
+    }
+  })
+}
+
 exports.one = function(req, res, next) {
   // get /post/:id
   var id = req.params.id

@@ -1,0 +1,10 @@
+if locals.user
+  form(method='POST' action='/post/#{post._id}/reply')
+    .form-group
+      textarea.form-control(name='reply')
+    button.btn(class='btn-primary') 回复
+
+if post.replys
+  each reply in post.replys
+    .post-block
+      p= reply.content
