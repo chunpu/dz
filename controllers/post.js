@@ -12,6 +12,25 @@ exports.index = function(req, res) {
   })
 }
 
+exports.edit = function(req, res, next) {
+  var type = req.body.type
+  var post_id = req.params.id
+  model.Post.get(post_id, function(err, post) {
+    if (post) {
+      if (type === 'delete' && res.locals.user._id.toString() === post.author.toString()) {
+        post.remove(function(err) {
+          if (!err) {
+            res.render('post/delete')
+            return
+          }
+        })
+      }
+    } else {
+      next()
+    }
+  })
+}
+
 exports.reply = function(req, res, next) {
   var content = req.body.reply
   var post_id = req.params.id

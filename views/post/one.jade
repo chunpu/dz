@@ -19,7 +19,20 @@ block content
     else
       p= post.content
     hr
-    - console.log(post)
+    - if (locals.user && post.author.toString() == user._id.toString())
+      form(method='post' id='delete')
+        a.btn(class='btn-danger' id='btn-delete') 删除
+        a.btn(class='btn-warning' id='btn-delete-confirm' style='display: none') 确认删除
+        input.hide(name='type' value='delete')
+      script.
+        $('#btn-delete').click(function() {
+          $('#btn-delete-confirm').toggle()
+          return false
+        })
+        $('#btn-delete-confirm').click(function() {
+          $('#delete').submit()
+        })
+      hr
     p.soft 标签
     p.soft
       a(href='/user/#{post.author}' title='作者')= post.user.name
