@@ -4,7 +4,7 @@ aside
   div(class='panel panel-default')
     .panel-heading 快捷操作
     .panel-body
-      - var section = locals.section || locals.no_section
+      - var section = locals.section || {_id: '未分组'}
       a(class='btn btn-default btn-block' href='/new?section=#{section._id}') 发表新帖
       a(class='btn btn-default btn-block cursor-move' href='javascript:(function(){window.open("http:\/\/#{config.hostname}/share?url="+location.href)})()') 分享到这里
 

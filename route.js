@@ -4,15 +4,21 @@ var sign = require(p+'sign')
 var user = require(p+'user')
 var section = require(p+'section')
 var share = require(p+'share')
+var admin = require(p+'admin')
 
 module.exports = function(app) {
+
+  // admin
+  app.get('/admin*', admin.check) // check adn next
+  app.get('/admin', admin.index)
+  app.get('/admin/section', admin.section.index)
+  app.post('/admin/section/:id/delete', admin.section.delete)
+  app.get('/admin/post', admin.post.index)
+
   // post
   app.get('/', post.index)
   app.get('/new', post.new)
-
   app.post('/new', post.new_post)
-
-
   app.get('/post/:id', post.one)
   app.post('/post/:id/reply', post.reply)
   app.post('/post/:id', post.edit)

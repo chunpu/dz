@@ -1,0 +1,64 @@
+extends /layout
+block content
+  script.
+    $(function() {
+
+      $('.close').click(function() {
+        $(this).parent().next().children().first().toggle() // it's really dirty
+      })
+
+      $('.btn-delete').click(function() {
+        var passwd = $(this).parent().parent().children().first().val()
+        var section_id = this.dataset.section
+        var self = this
+        $.post('/admin/section/'+section_id+'/delete', {passwd: passwd}).done(function(data) {
+          if (data === 'ok') {
+            // i know it's dirty....
+            $(self).parent().parent().parent().parent().parent().fadeOut()
+          }
+        })
+      })
+    })
+
+  each section in locals.sections
+    div(class='col-xs-12 col-md-4')
+      div(class='panel panel-default')
+        .panel-heading
+          button.close(type='button' aria-hidden='true' ) &times
+          a(href='/section/#{section._id}')= section.name
+        .panel-body
+          div.input-group(style='display: none;')
+            input.form-control(type='text' placeholder='请再次输入密码')
+            span.input-group-btn
+              button.btn(class='btn-danger btn-delete' data-section='#{section._id}') 确认删除
+          - description = section.description || '快点给板块添加描述信息吧！'
+          p= description
+          p 总访问数
+            code= section.visit_count
+          p 总帖子数
+            code= section.post_count
+
+            
+  div(class='col-xs-12 col-md-4')
+    div(class='panel panel-default')
+      .panel-heading
+        a(href='/section/未分组') 未分组
+      .panel-body
+        p 快给帖子找个家吧!
+        p 总访问数
+          code= section.visit_count
+        p 总帖子数
+          code= section.post_count
+
+  div(class='col-xs-12 col-md-4')
+    div(class='panel panel-default')
+      .panel-heading 新建板块
+      .panel-body
+        form(method='POST')
+          input.form-control(type='text' name='name' placeholder='版块名称')
+          br
+          textarea.form-control(name='description' placeholder='板块描述')
+          br
+          button.btn 新建
+      
+

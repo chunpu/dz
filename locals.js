@@ -37,10 +37,13 @@ module.exports = function(app) {
   }
 
   function correctSectionCount() {
+    var sectionHash = {}
+    app.locals.sectionHash = sectionHash
     model.Section.list(function(err, sections) {
       if (sections) {
         app.locals.sections = sections
         sections.forEach(function(section) {
+          sectionHash[section._id] = section.name
           model.Post.find({section: section.id}, function(err, posts) {
             if (posts) {
               section.post_count = posts.length

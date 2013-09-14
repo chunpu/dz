@@ -1,0 +1,37 @@
+extends /layout
+block content
+  .panel
+    .panel-heading 帖子管理
+    .panel-body
+      table.table(class='table-striped')
+        thead
+          tr
+            th
+              input(type='checkbox')
+            th 
+              a 标题
+            th
+              a 作者
+            th
+              a 分组
+            th
+              a 日期
+        tbody
+          each post in posts
+            tr
+              td
+                input(type='checkbox')
+              td
+                a(href='/post/#{post._id}')= post.title
+              td
+                a(href='/user/#{post.user._id}')= post.user.name
+              td
+                - var section = post.section || '未分组'
+                - var sectionName = '未分组'
+                - if (typeof section === 'object') {
+                -   sectionName = sectionHash[section]
+                - }
+                a(href='/section/#{section}')= sectionName
+              td
+                a= post.time
+              

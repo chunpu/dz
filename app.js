@@ -27,12 +27,11 @@ app.use(express.cookieParser())
 app.use(express.bodyParser())
 app.use(function(req, res, next) {
   res.locals.req_path = req.path // for signin refer
-  var auth = req.cookies.auth
   res.locals.referer = req.headers.referer || '/'
-  if (auth) {
+  if (req.cookies && req.cookies.auth) {
     
     var util = require('./libs/util')
-    util.parseToken(auth, req, res, next)
+    util.parseToken(app, req, res, next)
     return
   }
   next()

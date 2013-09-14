@@ -75,12 +75,18 @@ exports.genToken = function(user, res) {
 }
 
 var model = require('../models')
-exports.parseToken = function(auth, req, res, cb) {
+exports.parseToken = function(app, req, res, cb) {
+  var auth = req.cookies.auth
+  var admins = app.locals.config.admins
   var str = exports.decrypt(auth, 'secret')
   var arr = str.split('\t')
   model.User.get(arr[0], function(err, user) {
     if (arr[1] === user.name) { // no need passwd
       // oh! it's async
+      if (admins.indexOf(user.name) !== -1) {
+        // admin!
+        user.isAdmin = true
+      }
       res.locals.user = user
       cb && cb()
     }

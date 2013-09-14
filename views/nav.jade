@@ -10,6 +10,8 @@ nav(class='navbar navbar-default' role='navigation')
     ul(class='nav navbar-nav')
       li: a(href='/') 首页
       li: a(href='/section') 板块
+      - if(locals.user && user.isAdmin)
+        li: a(href='/admin') 管理界面
     if locals.user
       ul(class='nav navbar-nav navbar-right')
         li: a(href='/user/#{locals.user._id}') #{locals.user.name}
