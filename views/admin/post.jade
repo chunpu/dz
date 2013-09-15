@@ -17,10 +17,11 @@ block content
             th
               a 日期
         tbody
+          form(method='POST')
           each post in posts
             tr
               td
-                input(type='checkbox')
+                input(type='checkbox' name='post_id' value='#{post._id}')
               td
                 a(href='/post/#{post._id}')= post.title
               td
@@ -34,4 +35,21 @@ block content
                 a(href='/section/#{section}')= sectionName
               td
                 a= post.time
-              
+      button.btn(class='btn-danger' id='btn-delete') 删除
+      script.
+        $(function() {
+          $('#btn-delete').click(function() {
+            var arr_post_id = []
+            var posts = $('[name=post_id]:checked')
+            posts.each(function() {
+              arr_post_id.push(this.value)
+            })
+            $.post('/admin/post/delete', {posts: arr_post_id}).done(function(data) {
+              if (data === 'ok') {
+                posts.parent().parent().fadeOut(600, function() {
+                  posts = undefined
+                })
+              }
+            })
+          })
+        })

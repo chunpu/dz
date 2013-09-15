@@ -53,6 +53,10 @@ exports.find = function(opt, cb) {
   Post.find(opt, cb)
 }
 
+exports.removeById = function(id, cb) {
+  Post.findByIdAndRemove(id, cb)
+}
+
 exports.list = function(num, cb) {
   Post.find().sort({_id: -1}).limit(num).exec(cb)
 }

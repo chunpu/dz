@@ -15,6 +15,19 @@ exports.index = function(req, res) {
 
 var post = exports.post = {}
 
+post.delete = function(req, res) {
+  var posts = req.body.posts || []
+  var count = 0
+  posts.forEach(function(post_id) {
+    model.Post.removeById(post_id, function(err) {
+      count++
+      if (count === posts.length) {
+        res.end('ok')
+      }
+    })
+  })
+}
+
 post.index = function(req, res) {
   model.Post.getPage({
     posts_per_page: 100

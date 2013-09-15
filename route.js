@@ -14,6 +14,7 @@ module.exports = function(app) {
   app.get('/admin/section', admin.section.index)
   app.post('/admin/section/:id/delete', admin.section.delete)
   app.get('/admin/post', admin.post.index)
+  app.post('/admin/post/delete', admin.post.delete)
 
   // post
   app.get('/', post.index)
