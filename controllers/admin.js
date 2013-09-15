@@ -13,6 +13,30 @@ exports.index = function(req, res) {
   res.render('admin/index')
 }
 
+var user = exports.user = {}
+
+user.index = function(req, res) {
+  model.User.find({}, function(err, users) {
+    if (users) {
+      res.locals.users = users
+      res.render('admin/user')
+    }
+  })
+}
+
+user.delete = function(req, res) {
+  var users = req.body.users || []
+  var count = 0
+  users.forEach(function(user_id) {
+    model.User.removeById(user_id, function(err) {
+      count++
+      if (count === users.length) {
+        res.end('ok')
+      }
+    })
+  })
+}
+
 var post = exports.post = {}
 
 post.delete = function(req, res) {

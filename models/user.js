@@ -9,6 +9,7 @@ var UserSchema = new mongoose.Schema({
   signature: String, // my signature
   
   score: {type: Number, default: 0}, // jinyan
+  power: {type: Number, default: 0}, // power
   post_count: {type: Number, default: 0}, // how many post
   create_at: {type: Date, default: Date.now}, // when create
   update_at: {type: Date, default: Date.now} // last post
@@ -23,6 +24,14 @@ exports.getRecentPosts = function(id, cb) {
   }
   var Post = require('./post')
   Post.getPage(opt, cb)
+}
+
+exports.find = function(opt, cb) {
+  Users.find(opt, cb)
+}
+
+exports.removeById = function(id, cb) {
+  Users.findByIdAndRemove(id, cb)
 }
 
 /**

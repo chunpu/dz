@@ -17,7 +17,6 @@ block content
             th
               a 日期
         tbody
-          form(method='POST')
           each post in posts
             tr
               td
@@ -35,12 +34,15 @@ block content
                 a(href='/section/#{section}')= sectionName
               td
                 a= post.time
-      button.btn(class='btn-danger' id='btn-delete') 删除
+      button.btn(class='btn-danger' id='btn-delete') 删除帖子
       script.
         $(function() {
           $('#btn-delete').click(function() {
             var arr_post_id = []
             var posts = $('[name=post_id]:checked')
+            if (posts.length === 0) {
+              return
+            }
             posts.each(function() {
               arr_post_id.push(this.value)
             })

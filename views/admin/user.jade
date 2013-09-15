@@ -1,0 +1,53 @@
+extends /layout
+block content
+  .panel
+    .panel-heading 用户管理
+    .panel-body
+      table.table(class='table-striped')
+        thead
+          tr
+            th
+              input(type='checkbox')
+            th
+              a 用户名
+            th
+              a 电子邮件
+            th
+              a 权限
+            th
+              a 文章数
+        tbody
+          each user in users
+            tr
+              td
+                input(type='checkbox' name='user_id' value='#{user._id}')
+              td
+                a(href='/user/#{user._id}')= user.name
+              td
+                a= user.email
+              td
+                a= user.power
+              td
+                a(href='/user/#{user._id}#posts')= user.post_count
+
+      button.btn(class='btn-danger' id='btn-delete') 删除用户
+      script.
+        $(function() {
+          $('#btn-delete').click(function() {
+            var arr_user_id = []
+            var users = $('[name=user_id]:checked')
+            if (users.length === 0) {
+              return
+            }
+            users.each(function() {
+              arr_user_id.push(this.value)
+            })
+            $.post('/admin/user/delete', {users: arr_user_id}).done(function(data) {
+              if (data === 'ok') {
+                users.parent().parent().fadeOut(600, function() {
+                  users = undefined
+                })
+              }
+            })
+          })
+        })
