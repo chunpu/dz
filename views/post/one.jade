@@ -12,12 +12,15 @@ block content
     h3= post.title
     hr
     if post.type === 'share'
-      p!= post.content
+      p= post.content
       hr
       blockquote
         a(href='#{post.share_url}') 点击查看原文
     else
-      p= post.content
+      script(src='http://cdn.staticfile.org/marked/0.2.9/marked.js')
+      script(src='http://cdn.staticfile.org/prettify/r298/prettify.min.js')
+      // script(src='http://bonsaiden.github.io/gfm/marked.js')
+      p.markdown!= post.content
     hr
     - if (locals.user && post.author.toString() == user._id.toString())
       form(method='post' id='delete')
@@ -41,3 +44,27 @@ block content
     
     if post.replys
       include /post/reply
+    
+    script.
+      $(function() {
+
+        marked.setOptions({
+          gfm: true,
+          breaks: true
+        })
+        $('.markdown').each(function() {
+          var text = this.innerHTML
+          console.log($(this).html())
+          // innerHTML will auto entitied
+          text = text.replace(/&gt;/g, '>') // innerHTML auto change?
+          text = text.replace(/&amp;/g, '&')
+          text = text.replace(/&lt;/g, '<')
+          var html = marked(text)
+          // for pretty print
+          html = html.replace(/^<pre>/, '<pre class="prettyprint">')
+          this.innerHTML = html
+          prettyPrint()
+        })
+
+        
+      })
