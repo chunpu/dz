@@ -42,7 +42,6 @@ exports.reply = function(req, res, next) {
         content: content
       })
       post.save(function(err, post) {
-        console.log(err, post)
         res.redirect('/post/'+post_id)
       })
     }
@@ -69,17 +68,13 @@ exports.one = function(req, res, next) {
 
 exports.new = function(req, res, next) {
   // sth is wrong,it's no use?
-  var section_id = req.query.section
-  if (section_id) {
-    model.Section.get(section_id, function(err, section) {
-      if (section) {
-        res.locals.section = section
-        res.render('post/new')
-      }
-    })
-  } else {
-    next()
-  }
+  var section_id = req.query.section || '未分组'
+  model.Section.get(section_id, function(err, section) {
+    if (section) {
+      res.locals.section = section
+    }
+    res.render('post/new')
+  })
 }
 
 exports.new_post = function(req, res, next) {

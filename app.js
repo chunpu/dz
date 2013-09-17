@@ -28,6 +28,7 @@ app.use(express.bodyParser())
 app.use(function(req, res, next) {
   res.locals.req_path = req.path // for signin refer
   res.locals.referer = req.headers.referer || '/'
+  res.locals.sections = app.locals.sections // add sections
   if (req.cookies && req.cookies.auth) {
     
     var util = require('./libs/util')

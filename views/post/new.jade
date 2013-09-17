@@ -2,7 +2,9 @@ extends /layout
 block content
   ol.breadcrumb
     li: a(href='/section') 全部版块
-    li.active= locals.section.name
+    - var section = locals.section || {name: '未分组', _id: '未分组'}
+    li: a(href='/section/#{section._id}')= section.name
+    li.active 新帖子
   .page-header: h3 发表帖子
   form(method='POST')
     .form-group
