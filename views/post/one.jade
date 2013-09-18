@@ -24,6 +24,8 @@ block content
     hr
     - if (locals.user && post.author.toString() == user._id.toString())
       form(method='post' id='delete')
+        a.btn(href='/post/#{post._id}/edit' class='btn-primary') 编辑
+        // new line
         a.btn(class='btn-danger' id='btn-delete') 删除
         a.btn(class='btn-warning' id='btn-delete-confirm' style='display: none') 确认删除
         input.hide(name='type' value='delete')

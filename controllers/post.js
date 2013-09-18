@@ -12,7 +12,37 @@ exports.index = function(req, res) {
   })
 }
 
-exports.edit = function(req, res, next) {
+exports.edit = function(req, res) {
+  var post_id = req.params.id
+  model.Post.get(post_id, function(err, post) {
+    if (post) {
+      if (res.locals.user && post.author.toString() === res.locals.user._id.toString()) {
+        console.log('pass')
+        res.locals.post = post
+        res.render('post/edit')
+      }
+    }
+  })
+}
+
+exports.edit_post = function(req, res, next) {
+  var post_id = req.params.id
+  model.Post.get(post_id, function(err, post) {
+    if (post) {
+      post.title = req.body.title
+      post.content = req.body.content
+      post.save(function(err) {
+        if (!err) {
+          res.redirect('/post/'+post._id)
+        } else {
+          next()
+        }
+      })
+    }
+  })
+}
+
+exports.control = function(req, res, next) {
   var type = req.body.type
   var post_id = req.params.id
   model.Post.get(post_id, function(err, post) {
@@ -79,22 +109,27 @@ exports.new = function(req, res, next) {
 
 exports.new_post = function(req, res, next) {
   // incr author post_count and section post_count
-  model.Post.add({
-    author: res.locals.user._id,
-    author_name: res.locals.user.name,
-    title: req.body.title,
-    content: req.body.content,
-    section: req.query.section
-  }, function(err, post) {
-    if (post) {
-      incrAuthorPost(post.author)
-      incrSectionPost(post.section)
-      var id = post._id
-      res.redirect('/post/'+id)
-    } else {
-      next()
-    }
+  model.Section.get(req.query.section, function(err, section) {
+    section = section || {}
+    model.Post.add({
+      author: res.locals.user._id,
+      author_name: res.locals.user.name,
+      title: req.body.title,
+      content: req.body.content,
+      section: section._id
+    }, function(err, post) {
+      if (post) {
+        incrAuthorPost(post.author)
+        incrSectionPost(post.section)
+        var id = post._id
+        res.redirect('/post/'+id)
+      } else {
+        next()
+      }
+    })
+   
   })
+
 }
 
 function incrAuthorPost(id) {
@@ -106,7 +141,9 @@ function incrAuthorPost(id) {
 
 function incrSectionPost(id) {
   model.Section.get(id, function(err, section) {
-    section.post_count++
-    section.save()
+    if (section) {
+      section.post_count++
+      section.save()
+    }
   })
 }

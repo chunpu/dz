@@ -1,0 +1,14 @@
+extends /layout
+block content
+  ol.breadcrumb
+    li: a(href='/section') 全部版块
+    - var section = locals.section || {name: '未分组', _id: '未分组'}
+    li: a(href='/section/#{section._id}')= section.name
+    li.active= post.title
+  .page-header: h3 编辑帖子
+  form(method='POST')
+    .form-group
+      input.form-control(type='text' placeholder='标题' name='title' value='#{post.title}')
+    .form-group
+      textarea.form-control(placeholder='内容' name='content' rows='20')= post.content
+    button(class='btn btn-primary') 提交更新

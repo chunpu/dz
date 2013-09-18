@@ -23,8 +23,10 @@ module.exports = function(app) {
   app.get('/new', post.new)
   app.post('/new', post.new_post)
   app.get('/post/:id', post.one)
+  app.post('/post/:id', post.control) // small method like delete, like, up, they are same because they won't match a view
+  app.get('/post/:id/edit', post.edit)
   app.post('/post/:id/reply', post.reply)
-  app.post('/post/:id', post.edit)
+  app.post('/post/:id/edit', post.edit_post)
 
   // sign
   app.get('/signup', sign.signup)
